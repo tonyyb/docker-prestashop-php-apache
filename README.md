@@ -35,7 +35,7 @@ You can comment or uncomment some services according to your project.
 * [`mysql:5.7`](https://hub.docker.com/_/mysql/) ;
 * [`phpmyadmin/phpmyadmin`](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) ;
 * [`mailhog/mailhog:v1.0.0`](https://hub.docker.com/r/mailhog/mailhog) ;
-* [`tonyyb/prestashop-elasticsearch:5.6.15`](https://hub.docker.com/_/elasticsearch) ;
+* [`tonyyb/prestashop-elasticsearch:5.6.15`](https://hub.docker.com/r/tonyyb/prestashop-elasticsearch) ;
 * [`docker.elastic.co/kibana/kibana:5.6.15`](https://hub.docker.com/_/kibana) ;
 
 ## Contributing
