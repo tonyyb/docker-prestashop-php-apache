@@ -1,5 +1,7 @@
 # Docker images for PrestaShop development
 
+[![Travis](https://img.shields.io/travis/tonyyb/docker-prestashop-php-apache.svg?maxAge=1800&style=flat-square)](https://travis-ci.org/tonyyb/docker-prestashop-php-apache)
+
 ## Requirements
 
 These images requires **Docker** and **Docker Compose**.
