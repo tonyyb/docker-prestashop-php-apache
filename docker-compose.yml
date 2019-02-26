@@ -1,0 +1,105 @@
+version: '3'
+services:
+
+  php-apache:
+    build: tonyyb/prestashop-php-apache/7.2
+    ports:
+      - 4000:80
+    volumes:
+      - ./htdocs:/var/www/htdocs
+    networks:
+      - front-tier
+      - back-tier
+    environment:
+      PS_ENV: "docker"
+      PS_MYSQL_DOCKER_HOST: "mysql"
+      PS_MYSQL_DOCKER_USER: ${MYSQL_USER}
+      PS_MYSQL_DOCKER_DATABASE: ${MYSQL_DATABASE}
+      PS_MYSQL_DOCKER_PASSWORD: ${MYSQL_PASSWORD}
+      PS_DOCKER_DOMAIN: "localhost:4000"
+    restart: 'always'
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysqldata:/var/lib/mysql
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - back-tier
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 4001:80
+    networks:
+      - back-tier
+    env_file: .env
+    environment:
+      PMA_HOST: "mysql"
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - 1025:1025
+      - 4025:8025
+    networks:
+      - back-tier
+      - front-tier
+
+#  elasticsearch:
+#    build: tonyyb/prestashop-elasticsearch/5.6.15
+#    volumes:
+#      - elasticsearchdata:/usr/share/elasticsearch/data
+#    ports:
+#      - 7200:9200
+#      - 7300:9300
+#    expose:
+#      - 7200
+#    environment:
+#      - "cluster.name=docker-cluster"
+#      - "bootstrap.memory_lock=true"
+#      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+#      - "discovery.type=single-node"
+#      - "xpack.security.enabled=false"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    networks:
+#       - elk
+#       - front-tier
+#
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:5.6.15
+#    environment:
+#      SERVER_NAME: localhost
+#      ELASTICSEARCH_URL: http://elasticsearch:9200/
+#    ports:
+#      - 5601:5601
+#    expose:
+#      - 5601
+#    networks:
+#      - elk
+#    depends_on:
+#      - elasticsearch
+
+volumes:
+  mysqldata:
+    driver: local
+#  elasticsearchdata:
+#    driver: local
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
+#  elk:
+#    driver: bridge

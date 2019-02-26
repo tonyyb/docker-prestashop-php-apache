@@ -1,0 +1,8 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build -t test/php-apache:7.2 php-apache/7.2/
+  - docker build -t test/elasticsearch:5.6.15 elasticsearch/5.6.15
