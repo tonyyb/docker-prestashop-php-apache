@@ -2,7 +2,7 @@ version: '3'
 services:
 
   php-apache:
-    image: tonyyb/prestashop-php-apache/7.2
+    image: tonyyb/prestashop-php-apache:7.2
     ports:
       - 4000:80
     volumes:
@@ -54,7 +54,7 @@ services:
       - front-tier
 
 #  elasticsearch:
-#    image: tonyyb/prestashop-elasticsearch/5.6.15
+#    image: tonyyb/prestashop-elasticsearch:5.6.15
 #    volumes:
 #      - elasticsearchdata:/usr/share/elasticsearch/data
 #    ports:
